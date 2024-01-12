@@ -1,6 +1,9 @@
 Proyecto - Tercera Entrega
+
 Concurso de creación de pizzas
+
 Esta es una página web que permite registrar a los participantes, asesores y las creaciones de pizzas.
+
 1. Ejecutar python manage.py runserver.
 2. Ingresar el tamaño de pizza a buscar.
 3. Saldrá un listado con todos los sabores de pizzas disponibles para ese tamaño.
