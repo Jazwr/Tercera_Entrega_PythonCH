@@ -1,0 +1,31 @@
+{% extends "AppPizzas/padre.html" %}
+
+
+{% load static %}
+
+
+{% block titulo %}
+
+Bienvenidos a mi página
+
+{% endblock %}
+
+{% block description%}
+                    
+
+<form action="/AppPizzas/resultados/" method="POST"> {% csrf_token %}
+
+    <p> Tamaño de la Pizza: <input type="text" name="BuscarPizza" id="BuscarPizza" ></p>
+    <input type="submit" value="BuscarPizza">
+</form>
+
+
+<p> Estamos buscando la pizza: {{Nombre_Pizza}}</p>
+
+    {% for nombres in nombres %}
+
+    <p>  Tamaño: {{nombres.tamaño}} --- Nombre: {{nombres.nombre}}</p>
+
+    {% endfor %}
+
+{% endblock %}
