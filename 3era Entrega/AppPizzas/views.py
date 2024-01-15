@@ -18,13 +18,13 @@ def agregarPizza(request):
             nueva_pizza = Pizza(nombre=info["nombre"],tamaño=info["tamaño"],masa=info["masa"],ingrediente1=info["ingrediente1"],ingrediente2=info["ingrediente2"],ingrediente3=info["ingrediente3"],ingrediente4=info["ingrediente4"])
             #,ingrediente5=info["ingrediente5"],ingrediente6=info["ingrediente6"])
             nueva_pizza.save()
-            return render (request,"AppPizzas/todas_pizzas.html")
+            return render (request,"AppPizzas/inicio.html")
             #print(info)
         #print(info_formulario)
 
     else:
-        nuevoformulario = PizzaFormulario()
-    return render(request,"AppPizzas/crear_pizza.html",{"nuevo":nuevoformulario})
+        info_formulario = PizzaFormulario()
+    return render(request,"AppPizzas/todas_pizzas.html",{"nuevo":info_formulario})
 
 def verPizza(request):
 
@@ -35,17 +35,17 @@ def agregar_asesor(request):
         asesor_formulario = AsesorFormulario(request.POST)
         
         if asesor_formulario.is_valid():
-            ases = asesor_formulario.cleaned_data
-            datos_asesor = Asesor(nombre=ases["nombre"],cod_ases=ases["cod_ases"],ases=ases["correo"])
+            asesor = asesor_formulario.cleaned_data
+            datos_asesor = Asesor(nombre=asesor["nombre"],cod_ases=asesor["cod_ases"],correo=asesor["correo"])
             #,ingrediente5=info["ingrediente5"],ingrediente6=info["ingrediente6"])
             datos_asesor.save()
-            return render (request,"AppPizzas/asesor.html")
+            return render (request,"AppPizzas/inicio.html")
             #print(info)
         #print(info_formulario)
 
     else:
-        nuevoasesor = AsesorFormulario()
-    return render(request,"AppPizzas/asesor.html",{"nuevo_asesor":nuevoasesor})
+        asesor_formulario = AsesorFormulario()
+    return render(request,"AppPizzas/asesor.html",{"nuevo_asesor":asesor_formulario})
 
 
 def agregar_creador(request):
@@ -60,25 +60,38 @@ def agregar_creador(request):
             return render (request,"AppPizzas/inicio.html")
         
     else:
-        nuevocreador = CreadorFormulario()
-    return render(request,"AppPizzas/creador.html",{"nuevo_creador":nuevocreador})
+        creador_formulario = CreadorFormulario()
+    return render(request,"AppPizzas/creador.html",{"nuevo_creador":creador_formulario})
 
 
 
 def busquedaPizza(request):
     
-    return render(request,"AppPizzas/inicio.html")
+    return render(request,"AppPizzas/busquedaPizza.html")
 
-def resultados(request):
-    if request.GET["BusquedaPizza"]:
+def resultados2 (request):
+    if request.GET["tamaño"]:
 
-        BuscarPizza=request.GET["BusquedaPizza"]
-        Nombres=Pizza.objects.filter(BuscarPizza__icontains=BuscarPizza)
+        tamaño = request.GET["tamaño"]
+        resultados = Pizza.objects.filter(tamaño__icontains=tamaño)
     
-        return render(request,"AppPizzas/inicio.html", {"tamaño":BuscarPizza,"Nombre_Pizza":Nombres})
+        return render(request,"AppPizzas/resultados.html", {"tamaño":tamaño})
     
     else:
-        respuesta = "No enviaste datos"
+        respuesta="No enviaste datos"
 
     return HttpResponse(respuesta)
 
+def resultados (request):
+    if request.method=='GET':
+
+        tamaño = request.GET["tamaño"]
+        resultados = Pizza.objects.filter(tamaño__icontains=tamaño)
+    
+        return render(request,"AppPizzas/resultados.html", {"resultados":resultados})
+    
+    else:
+        respuesta="No enviaste datos"
+
+    return HttpResponse(respuesta)
+                        
